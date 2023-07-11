@@ -742,12 +742,18 @@ python do_vigiles_check() {
         vigiles_env['VIGILES_SUBFOLDER_NAME'] = _orig_env.getVar('VIGILES_SUBFOLDER_NAME') or ''
 
         conf_key = d.getVar('VIGILES_KEY_FILE')
+        if not conf_key:
+            bb.warn("VIGILES_KEY_FILE is empty!")
         if conf_key:
             args = args + ['-K', conf_key]
         conf_dashboard = d.getVar('VIGILES_DASHBOARD_CONFIG')
+        if not os.path.exists(conf_dashboard):
+            bb.warn("VIGILES_DASHBOARD_CONFIG not found: %s" % conf_dashboard)
         if conf_dashboard:
             args = args + ['-C', conf_dashboard]
         conf_subfolder_name = d.getVar('VIGILES_SUBFOLDER_NAME')
+        if not conf_subfolder_name:
+            bb.warn("VIGILES_SUBFOLDER_NAME is empty!")
         if conf_subfolder_name:
             args = args + ['-F', conf_subfolder_name]
 
