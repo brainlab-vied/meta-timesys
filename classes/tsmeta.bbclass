@@ -264,7 +264,7 @@ def _get_cve_product(d):
             if not bb.data.inherits_class('kernel', d):
                 cve_p = 'u-boot'
     if not cve_p:
-        cve_p = d.getVar('PN')
+        cve_p = d.getVar('BPN')
     return cve_p
 
 
@@ -276,7 +276,7 @@ def _get_version_from_makefile(d):
     source_dir = os.path.relpath(d.getVar('S'))
     makefile_path = os.path.join(source_dir, 'Makefile')
     if not os.path.exists(makefile_path):
-        return None
+        return None, None, None, None
 
     try:
         with open(makefile_path) as f_in:
